@@ -1,4 +1,3 @@
-
 """
 Featurize several files at once
 """
@@ -16,11 +15,12 @@ def featurize_from_shortlist(shortlist_path=None):
     Featurize and split a list of datasets.
     """
     sl = pd.read_csv(shortlist_path)
+    result_dir=os.getcwd()
     
     hyper_params = {
         "hyperparam": "True",
         "split_only": "True",
-        "result_dir": './',
+        "result_dir": result_dir,
         "save_results": "False",
         "datastore": "False",
         "system": "LC",
@@ -28,8 +28,9 @@ def featurize_from_shortlist(shortlist_path=None):
         "smiles_col" : "base_rdkit_smiles",
         "collection_name" : "featurize",
         'featurizer' : 'computed_descriptors',
-        "num_model_tasks":1,
+        "splitter":"random"
     }
+    
     for feat in ['rdkit_raw', 'mordred_filtered']:
         hyper_params['descriptor_type']=feat
         for i, row in sl.iterrows():
@@ -43,10 +44,7 @@ def featurize_from_shortlist(shortlist_path=None):
 
             # Featurize and split the dataset
             split_uuid = pipe.split_dataset()
-
-            # Delete split file to keep it cleaner
-            print(hyper_params['result_dir'])
-            os.remove(f"{hyper_params['result_dir']}/{dataset_key.replace('.csv', '_train_valid_test_scaffold_')}{split_uuid}.csv")
+            
         
 if __name__ == '__main__':
     print('shortlist file:', sys.argv[1])

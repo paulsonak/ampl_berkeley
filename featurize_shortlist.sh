@@ -4,9 +4,10 @@
 #SBATCH -p savio2_htc
 #SBATCH -t 60
 #SBATCH --cpus-per-task=1
-#SBATCH --job-name="feat_add_valid"
-#SBATCH --output="./feat_add_valid.out"
-#SBATCH --error="./feat_add_valid.out"
+
+#SBATCH --job-name="feat_shortlist"
+#SBATCH --output="./feat_shortlist.out"
+#SBATCH --error="./feat_shortlist.out"
 
 echo $3
 cd $3
